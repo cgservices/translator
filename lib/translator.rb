@@ -6,7 +6,7 @@ require 'translator/engine' if defined?(Rails) && Rails::VERSION::STRING.to_f >=
 
 module Translator
   class << self
-    attr_accessor :auth_handler, :current_store, :framework_keys, :available_locales, :default_locale
+    attr_accessor :auth_handler, :current_store, :framework_keys, :available_locales, :default_locale, :admin_locales, :simple_backend_translations
     attr_reader :simple_backend
     attr_writer :layout_name
   end
@@ -50,16 +50,25 @@ module Translator
   end
 
   def self.locales
-    @available_locales || I18n.available_locales || @simple_backend.available_locales
+    @admin_locales || I18n.available_locales || @simple_backend.available_locales
+  end
+
+  def self.admin_locales
+    @admin_locales ||= @available_locales
+  end
+
+  def self.simple_backend_translations
+    return @simple_backend_translations unless @simple_backend_translations.blank?
+    @simple_backend.load_translations
+    self.locales
+    default_locale = Translator.default_locale.to_sym
+    @simple_backend_translations = @simple_backend.send(:translations)[default_locale]
   end
 
   def self.keys_for_strings(options = {})
-    @simple_backend.load_translations
-    self.locales
-
     flat_translations = {}
-    default_locale = Translator.default_locale.to_sym
-    flatten_keys nil, @simple_backend.send(:translations)[default_locale], flat_translations
+
+    flatten_keys nil, self.simple_backend_translations, flat_translations
 
     flat_translations = flat_translations.delete_if {|k,v| !v.is_a?(String) }
     store_keys = Translator.current_store.keys.map {|k| k.sub(/^[a-z0-9\-_]*\./i, '')}
@@ -80,7 +89,6 @@ module Translator
     when "application"
       keys -= @framework_keys
     end
-
     keys || []
   end
 
