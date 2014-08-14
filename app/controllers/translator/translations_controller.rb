@@ -4,17 +4,16 @@ module Translator
     layout Translator.layout_name
 
     def index
-      section = params[:key].present? && params[:key] + '.'
-      params[:group] = "all" unless params["group"]
-      @sections = Translator.keys_for_strings(:group => params[:group]).map {|k| k = k.scan(/^[a-zA-Z0-9\-_]*\./)[0]; k ? k.gsub('.', '') : false}.select{|k| k}.uniq.sort
-      @groups = ["framework", "application", "deleted"]
-      @keys = Translator.keys_for_strings(:group => params[:group], :filter => section)
+      # section = params[:key].present? && params[:key] + '.'
+      params[:group] = "all"
+      # @sections = Translator.keys_for_strings(:group => params[:group]).map {|k| k = k.scan(/^[a-zA-Z0-9\-_]*\./)[0]; k ? k.gsub('.', '') : false}.select{|k| k}.uniq.sort
+      # @groups = ["framework", "application", "deleted"]
+      @keys = Translator.keys_for_strings(:group => params[:group])
       if params[:search]
         @keys = @keys.select {|k|
-          Translator.locales.any? {|locale| I18n.translate("#{k}", :locale => locale).to_s.downcase.include?(params[:search].downcase)}
+          Translator.locales.any? {|locale| I18n.translate("#{k}", :locale => locale).to_s.downcase.include?(params[:search].downcase) || k.to_s.downcase.include?(params[:search].downcase)}
         }
       end
-
       if params[:translated] == '1'
         @keys = @keys.select {|k|
           Translator.locales.all? {|locale| (begin I18n.backend.translate(locale, "#{k}") rescue nil; end).present? }

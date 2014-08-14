@@ -4,8 +4,8 @@
         <%= form_tag translations_path, :method => "get" do %>
           <%= label_tag :key, "Filter: " %>
           <%= text_field_tag :search, params[:search], :placeholder => "Search for text..." %>
-          <%= select_tag :key, options_for_select(@sections.collect {|k| [k.humanize, k]}.unshift(["All sections", nil]), params[:key]) %>
-          <%= select_tag :group, options_for_select(@groups.collect {|k| [k.humanize, k]}.unshift(["All groups", nil]), params[:group]) %>
+          <%# select_tag :key, options_for_select(@sections.collect {|k| [k.humanize, k]}.unshift(["All sections", nil]), params[:key]) %>
+          <%# select_tag :group, options_for_select(@groups.collect {|k| [k.humanize, k]}.unshift(["All groups", nil]), params[:group]) %>
           <%= select_tag :translated, options_for_select([["Translation state", nil], ['Fully translated', '1'], ['Missing translations', '0']], params[:translated]) %>
           <%= submit_tag "Submit", :class => "btn btn-primary" %>
         <% end %>
