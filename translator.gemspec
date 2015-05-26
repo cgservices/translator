@@ -18,6 +18,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n'
   s.add_dependency 'redis'
   s.add_dependency 'ya2yaml'
+  s.add_dependency 'bootstrap-sass'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'jquery-ui-rails'
+  s.add_dependency 'autosize-rails'
+  s.add_dependency 'chosen-rails'
 
 end
 

@@ -12,3 +12,9 @@ end
 #  end
 #}
 
+Translator.auth_handler = proc {
+  unless current_user && current_user.roles.include?(Role.find_by_name("admin"))
+    redirect_to new_user_session_path
+  end
+}
+
