@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob("{app,lib,config}/**/*") + %w(LICENSE README.rdoc)
   s.require_path = 'lib'
 
+  s.add_dependency 'rails'
   s.add_dependency 'i18n'
   s.add_dependency 'redis'
   s.add_dependency 'ya2yaml'
@@ -22,8 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
-  s.add_dependency 'autosize-rails'
-  s.add_dependency 'chosen-rails'
+  s.add_dependency 'select2-rails'
 
 end
 

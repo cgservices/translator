@@ -1,5 +1,13 @@
+require 'rails/all'
+require 'sprockets/rails'
 require 'rake'
 require 'ya2yaml'
+require 'bootstrap-sass'
+require 'sass-rails'
+require 'jquery-rails'
+require 'jquery-ui-rails'
+require 'select2-rails'
+
 load 'tasks/export_locale.rake'
 
 require 'translator/engine' if defined?(Rails) && Rails::VERSION::STRING.to_f >= 3.1
