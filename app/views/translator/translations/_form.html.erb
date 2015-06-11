@@ -1,12 +1,15 @@
 <%= form_tag translations_path, :id => "#{locale}.#{key}".gsub('.', '-'), :class => "translate", "data-remote" => true, :method => "post" do %>
   <%= hidden_field_tag :key, "#{locale}.#{key}" %>
-  <%
-    val = (begin I18n.backend.translate locale, "#{key}"; rescue; end)
-   %>
-
-  <span class='locale'><%= locale %>: </span><%= text_area_tag :value, val, :style => "width: 650px;" %>
-  <%= submit_tag "Save", "data-disable-with" => "Saving...", :class => 'btn btn-primary' %>
-  <% if (default_val = (begin Translator.simple_backend.translate locale, key; rescue; end;)) != val %>
-    <%= link_to "Default", '#', "data-recover" => default_val || "", :class => "btn btn-danger" %>
-  <% end %>
+  <% val = (begin I18n.backend.translate locale, "#{key}"; rescue; end) %>
+  <div class="locale"><%= locale %>:</div>
+  <div class="translation">
+    <%= text_area_tag :value, val, :style => "width: 650px;" %>
+  </div>
+  <div class="buttons">
+    <%= submit_tag "Save", "data-disable-with" => "Saving...", :class => 'btn btn-primary' %>
+    <% if (default_val = (begin Translator.simple_backend.translate locale, key; rescue; end;)) != val %>
+      <%= link_to "Default", '#', "data-recover" => default_val || "", :class => "btn btn-danger" %>
+    <% end %>
+  </div>
+  <div class="clear"></div>
 <% end %>
