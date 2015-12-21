@@ -7,9 +7,8 @@ require 'sass-rails'
 require 'jquery-rails'
 require 'jquery-ui-rails'
 require 'select2-rails'
-
-load 'tasks/export_locale.rake'
-
+require 'pry'
+require 'rack/utils'
 require 'translator/engine' if defined?(Rails) && Rails::VERSION::STRING.to_f >= 3.1
 
 module Translator
@@ -122,4 +121,3 @@ module Translator
     hash
   end
 end
-
