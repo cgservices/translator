@@ -9,6 +9,10 @@ module Translator
       # @sections = Translator.keys_for_strings(:group => params[:group]).map {|k| k = k.scan(/^[a-zA-Z0-9\-_]*\./)[0]; k ? k.gsub('.', '') : false}.select{|k| k}.uniq.sort
       # @groups = ["framework", "application", "deleted"]
       @keys = Translator.keys_for_strings(:group => params[:group])
+      if params[:key]
+        @keys = @keys.select {|k| k.include?(params[:key]) }
+      end
+
       if params[:search]
         @keys = @keys.select {|k|
           Translator.locales.any? {|locale| I18n.translate("#{k}", :locale => locale).to_s.downcase.include?(params[:search].downcase) || k.to_s.downcase.include?(params[:search].downcase)}
@@ -53,9 +57,8 @@ module Translator
     def paginate(collection)
       @page = params[:page].to_i
       @page = 1 if @page == 0
-      @total_pages = (collection.count / 50.0).ceil
-      collection[(@page-1)*50..@page*50]
+      @total_pages = (collection.count / 25.0).ceil
+      collection[(@page-1)*25..@page*25]
     end
   end
 end
-
