@@ -1,0 +1,18 @@
+<div class="navbar">
+  <div class="navbar-inner">
+    <a href="/translations">Translations</a> | <a href="/translations/keys">Translation keys</a>
+  </div>
+  <%= form_tag form_path, :method => "get" do %>
+    <div class="navbar-inner">
+      <%= label_tag :key, "Filter: ", style: 'width:60px' %>
+      <%= text_field_tag :key, params[:key], :placeholder => "By key..." %>
+      <%= text_field_tag :search, params[:search], :placeholder => "Search for text..." %>
+      <%= select_tag :translated, options_for_select([["Translation state", nil], ['Same translations', '2'], ['Fully translated', '1'], ['Empty translations', '0']], params[:translated]), class: 'select2' %>
+      <%= submit_tag "Submit", :class => "btn btn-primary" %>
+    </div>
+    <div class="navbar-inner">
+        <%= label_tag :key, "Exclude: ", style: 'width:60px' %>
+        <%= text_field_tag :key_exclude, params[:key_exclude], :placeholder => "By key, seperate by space..." %>
+    </div>
+  <% end %>
+</div>

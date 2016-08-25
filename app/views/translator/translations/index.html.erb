@@ -1,15 +1,5 @@
 <div class="container">
-  <div class="navbar">
-    <div class="navbar-inner">
-        <%= form_tag translations_path, :method => "get" do %>
-          <%= label_tag :key, "Filter: " %>
-          <%= text_field_tag :key, params[:key], :placeholder => "By key..." %>
-          <%= text_field_tag :search, params[:search], :placeholder => "Search for text..." %>
-          <%= select_tag :translated, options_for_select([["Translation state", nil], ['Fully translated', '1'], ['Missing translations', '0']], params[:translated]), class: 'select2' %>
-          <%= submit_tag "Submit", :class => "btn btn-primary" %>
-        <% end %>
-    </div>
-  </div>
+  <%= render :partial => "search", :locals => {:form_path => translations_path } %>
   <% if params[:group] && params[:group] == 'deleted' %>
     <div>
       You can delete those translations from database as application doesn't use them anymore.

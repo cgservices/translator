@@ -1,0 +1,8 @@
+<div class="container">
+  <%= render :partial => "search", :locals => {:form_path => translations_keys_path } %>
+  <ol>
+    <% @keys.each do |key| %>
+      <li><%= link_to key, "/translations?key=#{key}" %></li>
+    <% end %>
+  </ol>
+</div>
