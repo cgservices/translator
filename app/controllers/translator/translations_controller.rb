@@ -12,7 +12,7 @@ module Translator
     end
 
     def keys
-      @keys = filter(translator_keys)
+      @keys = filter(translator_keys).sort
     end
 
     def index
@@ -65,7 +65,7 @@ module Translator
       if params[:translated] == '2'
         collection = collection.select { |k|
           translations = []
-          Translator.locales.each { |locale| translations << I18n.backend.translate(locale, "#{k}") }
+          Translator.locales.each { |locale| begin translations << I18n.backend.translate(locale, "#{k}") rescue nil; end }
           translations.uniq.length == 1
         }
       end
